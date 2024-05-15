@@ -25,54 +25,26 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        btnprofile = new javax.swing.JButton();
-        btnsummary = new javax.swing.JButton();
-        btnsettings = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuProf = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        menuSummary = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        menuSet = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 204, 255));
-
-        btnprofile.setBackground(new java.awt.Color(51, 102, 255));
-        btnprofile.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        btnprofile.setForeground(new java.awt.Color(255, 255, 255));
-        btnprofile.setText("Profile");
-        btnprofile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnprofileActionPerformed(evt);
-            }
-        });
-
-        btnsummary.setBackground(new java.awt.Color(51, 102, 255));
-        btnsummary.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        btnsummary.setForeground(new java.awt.Color(255, 255, 255));
-        btnsummary.setText("Summary");
-        btnsummary.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsummaryActionPerformed(evt);
-            }
-        });
-
-        btnsettings.setBackground(new java.awt.Color(51, 102, 255));
-        btnsettings.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        btnsettings.setForeground(new java.awt.Color(255, 255, 255));
-        btnsettings.setText("Settings");
-        btnsettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsettingsActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -94,56 +66,6 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton4.setBackground(new java.awt.Color(51, 102, 255));
-        jButton4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("100ml");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setBackground(new java.awt.Color(51, 102, 255));
-        jButton5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("200ml");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setBackground(new java.awt.Color(51, 102, 255));
-        jButton6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("300ml");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setBackground(new java.awt.Color(51, 102, 255));
-        jButton7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("400ml");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton8.setBackground(new java.awt.Color(51, 102, 255));
-        jButton8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("500ml");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Today's Progress:");
@@ -162,67 +84,103 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 69, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(78, 78, 78)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton9)))
-                .addGap(22, 22, 22))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnprofile, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnsummary, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnsettings, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnprofile)
-                            .addComponent(btnsummary)
-                            .addComponent(btnsettings))
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton8)
-                        .addGap(14, 14, 14))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton9))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(31, 31, 31))
+                .addGap(49, 49, 49)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton9))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
         );
+
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuBar1.setForeground(new java.awt.Color(0, 0, 0));
+
+        menuProf.setBackground(new java.awt.Color(255, 255, 255));
+        menuProf.setForeground(new java.awt.Color(0, 0, 0));
+        menuProf.setText("Profile");
+        menuProf.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuProf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuProfActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem1.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem1.setText("Profile");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuProf.add(jMenuItem1);
+
+        jMenuBar1.add(menuProf);
+
+        menuSummary.setText("Summary");
+        menuSummary.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuSummary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSummaryActionPerformed(evt);
+            }
+        });
+
+        jMenuItem3.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem3.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem3.setText("Summary");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuSummary.add(jMenuItem3);
+
+        jMenuBar1.add(menuSummary);
+
+        menuSet.setText("Settings");
+        menuSet.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuSet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSetActionPerformed(evt);
+            }
+        });
+
+        jMenuItem4.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem4.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem4.setText("Settings");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menuSet.add(jMenuItem4);
+
+        jMenuBar1.add(menuSet);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -238,53 +196,49 @@ public class Dashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnsettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsettingsActionPerformed
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        SettingForm stf = new SettingForm();
-        stf.setVisible(true);
-        setVisible(false);
-        stf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }//GEN-LAST:event_btnsettingsActionPerformed
+    }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void menuProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfActionPerformed
+
+    }//GEN-LAST:event_menuProfActionPerformed
+
+    private void menuSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSummaryActionPerformed
+
+    }//GEN-LAST:event_menuSummaryActionPerformed
+
+    private void menuSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_menuSetActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void btnprofileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnprofileActionPerformed
-        // TODO add your handling code here:
-        ProfileForm pf = new ProfileForm();
-        pf.setVisible(true);
-        setVisible(false);
-        pf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }//GEN-LAST:event_btnprofileActionPerformed
-
-    private void btnsummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsummaryActionPerformed
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         SummaryForm sf = new SummaryForm();
         sf.setVisible(true);
         setVisible(false);
+        sf.setLocation(null);     
         sf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }//GEN-LAST:event_btnsummaryActionPerformed
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+        SettingForm stf = new SettingForm();
+        stf.setVisible(true);
+        setVisible(false);
+        stf.setLocation(null);
+        stf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        ProfileForm pf = new ProfileForm();
+        pf.setVisible(true);
+        setVisible(false);
+        pf.setLocation(null);     
+        pf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,19 +276,19 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnprofile;
-    private javax.swing.JButton btnsettings;
-    private javax.swing.JButton btnsummary;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenu menuProf;
+    private javax.swing.JMenu menuSet;
+    private javax.swing.JMenu menuSummary;
     // End of variables declaration//GEN-END:variables
 }

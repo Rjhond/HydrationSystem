@@ -4,6 +4,8 @@
  */
 package com.mycompany.finals;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author pc
@@ -68,6 +70,11 @@ public class SummaryForm extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -131,6 +138,15 @@ public class SummaryForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Dashboard db = new Dashboard();
+        db.setVisible(true);
+        setVisible(false);
+        db.setLocation(null);     
+        db.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

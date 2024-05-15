@@ -4,6 +4,9 @@
  */
 package com.mycompany.finals;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pc
@@ -100,6 +103,11 @@ public class ASadmin extends javax.swing.JFrame {
         btnlogout.setBackground(new java.awt.Color(255, 51, 51));
         btnlogout.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnlogout.setText("Log out");
+        btnlogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlogoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -263,6 +271,21 @@ public class ASadmin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlogoutActionPerformed
+        // TODO add your handling code here:
+        int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Confrim", JOptionPane.YES_NO_OPTION);
+        
+        if(option == JOptionPane.YES_OPTION){
+            login lg = new login();
+            lg.setVisible(true);
+            setVisible(false);
+            lg.setLocation(null);     
+            lg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }else if(option == JOptionPane.NO_OPTION){
+ 
+        }
+    }//GEN-LAST:event_btnlogoutActionPerformed
 
     /**
      * @param args the command line arguments

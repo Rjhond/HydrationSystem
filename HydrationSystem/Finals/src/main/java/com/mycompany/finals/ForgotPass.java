@@ -4,7 +4,16 @@
  */
 package com.mycompany.finals;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +21,13 @@ import javax.swing.JFrame;
  */
 public class ForgotPass extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ForgotPass
-     */
+    private final Connection conn;
+    String username, newpass, reEnter, answer;
+    
     public ForgotPass() {
         initComponents();
+        conn = Dbconnect.connectDbase();
+        populateComboBox();
     }
 
     /**
@@ -30,17 +41,15 @@ public class ForgotPass extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboveri = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         btnback = new javax.swing.JButton();
         btnconfirm = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        txtanswer = new javax.swing.JTextField();
+        txtnewpass = new javax.swing.JPasswordField();
+        txtreenter = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,10 +59,6 @@ public class ForgotPass extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Forgot Password Menu");
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Old Password:");
-
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("New Password:");
@@ -62,26 +67,10 @@ public class ForgotPass extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Re-Enter New Password:");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cboveri.setBackground(new java.awt.Color(255, 255, 255));
+        cboveri.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        cboveri.setForeground(new java.awt.Color(0, 0, 0));
+        cboveri.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton1.setBackground(new java.awt.Color(102, 204, 0));
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -111,32 +100,28 @@ public class ForgotPass extends javax.swing.JFrame {
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtanswer.setBackground(new java.awt.Color(255, 255, 255));
+        txtanswer.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtanswer.setForeground(new java.awt.Color(0, 0, 0));
+        txtanswer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txtnewpass.setBackground(new java.awt.Color(255, 255, 255));
+        txtnewpass.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtnewpass.setForeground(new java.awt.Color(0, 0, 0));
+        txtnewpass.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txtreenter.setBackground(new java.awt.Color(255, 255, 255));
+        txtreenter.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtreenter.setForeground(new java.awt.Color(0, 0, 0));
+        txtreenter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jComboBox1, 0, 252, Short.MAX_VALUE)
-                            .addComponent(jTextField4))))
+                .addContainerGap(159, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addGap(146, 146, 146))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
@@ -144,31 +129,40 @@ public class ForgotPass extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnconfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtanswer, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboveri, 0, 250, Short.MAX_VALUE)
+                    .addComponent(txtnewpass)
+                    .addComponent(txtreenter, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addGap(79, 79, 79)
+                .addGap(98, 98, 98)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboveri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtanswer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnewpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                    .addComponent(txtreenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnback, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnconfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -189,6 +183,7 @@ public class ForgotPass extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
         // TODO add your handling code here:
         login lg = new login();
@@ -200,8 +195,49 @@ public class ForgotPass extends javax.swing.JFrame {
 
     private void btnconfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconfirmActionPerformed
         // TODO add your handling code here:
+        String question = (String) cboveri.getSelectedItem();
+        answer = txtanswer.getText();
+        newpass = txtnewpass.getText();
+        reEnter = txtreenter.getText();
+        
+        if(newpass.equals(reEnter)){
+            JOptionPane.showMessageDialog(this, "The Password does not match. Please try again");
+            return;
+        }
+        
+        if(question == null || question.equals("Please select Question") || answer.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please choose a question and submit an answer.");
+        }
+        
+        try(PreparedStatement pstmt = conn.prepareStatement("Select username From users WHERE securityQ = ? AND securityA = ?")){
+            pstmt.setString(1, question);
+            pstmt.setString(1, answer);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                username = rs.getString("username");
+                try(PreparedStatement pstUpdate = conn.prepareStatement("Upate users SET password = ? WHERE username = ?")){
+                    pstUpdate.setString(1, newpass);
+                    pstUpdate.setString(2, username);
+                    int updated = pstUpdate.executeUpdate();
+                    if(updated > 0){
+                        JOptionPane.showMessageDialog(this, "Password successfully reset");
+                        login lg = new login();
+                        lg.setVisible(true);
+                        setVisible(false);
+                        lg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Error: Invalid password, please try again");
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "Incorrect Answer, please try again");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }//GEN-LAST:event_btnconfirmActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
@@ -236,20 +272,25 @@ public class ForgotPass extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+        private void populateComboBox() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(new String[] {"Select a Question", "What is Your Mothers's Maiden Name?", 
+            "What is your pet's name?", "What is is your birthplace"});
+        cboveri.setModel(model);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnback;
     private javax.swing.JButton btnconfirm;
+    private javax.swing.JComboBox<String> cboveri;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txtanswer;
+    private javax.swing.JPasswordField txtnewpass;
+    private javax.swing.JPasswordField txtreenter;
     // End of variables declaration//GEN-END:variables
 }

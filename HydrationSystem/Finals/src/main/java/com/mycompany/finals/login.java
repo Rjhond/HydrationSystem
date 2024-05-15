@@ -6,6 +6,7 @@ package com.mycompany.finals;
  */
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
 public class login extends javax.swing.JFrame {
 
     private final Connection conn;
-    String username, password;
+    String role, username, password;
     
     public login() {
         initComponents();
@@ -172,24 +173,34 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
         username = txtusername.getText();
         password = txtpassword.getText();
-        try {
-            
-            Statement stmt=conn.createStatement();
-            
-            ResultSet rs=stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"'");
-            if(rs.next()){
-                Dashboard db = new Dashboard();
-                db.setVisible(true);
-                setVisible(false);
-                db.setLocation(null);     
-                db.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }else{
-                JOptionPane.showMessageDialog(null, "Invalid username or password");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
 
+        try(PreparedStatement apstmt = conn.prepareStatement("SELECT * FROM admin WHERE username=? AND password=?") ){
+            apstmt.setString(1, username);
+            apstmt.setString(2, password);
+            ResultSet ars = apstmt.executeQuery();
+            if(ars.next()){
+                AdminDB adb = new AdminDB();
+                adb.setVisible(true);
+                setVisible(false);
+                adb.setLocation(null);     
+                adb.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }else{
+                PreparedStatement upstmt = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+                upstmt.setString(1, username);
+                upstmt.setString(2, password);
+                ResultSet urs = upstmt.executeQuery();
+                if(urs.next()){
+                    Dashboard db = new Dashboard();
+                    db.setVisible(true);
+                    setVisible(false);
+                    db.setLocation(null);     
+                    db.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Invalid username or password");
+                }
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnloginActionPerformed
 
     /**
@@ -226,6 +237,8 @@ public class login extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnforgot;
