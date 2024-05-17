@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:4306
--- Generation Time: May 15, 2024 at 06:14 PM
+-- Generation Time: May 17, 2024 at 03:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -61,15 +61,23 @@ CREATE TABLE `users` (
   `lname` varchar(50) DEFAULT NULL,
   `securityQ` varchar(100) DEFAULT NULL,
   `securityA` varchar(50) DEFAULT NULL,
-  `RegDate` timestamp NULL DEFAULT current_timestamp()
+  `RegDate` timestamp NULL DEFAULT current_timestamp(),
+  `visitTime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `birthdate` date NOT NULL,
+  `contact` varchar(15) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `act` varchar(100) NOT NULL,
+  `interest` varchar(100) NOT NULL,
+  `bio` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`usersid`, `username`, `password`, `fname`, `mname`, `lname`, `securityQ`, `securityA`, `RegDate`) VALUES
-(1, 'bro', 'Password', 'arjhond', 'g', 'galia', NULL, NULL, '2024-05-15 02:53:36');
+INSERT INTO `users` (`usersid`, `username`, `password`, `fname`, `mname`, `lname`, `securityQ`, `securityA`, `RegDate`, `visitTime`, `birthdate`, `contact`, `email`, `act`, `interest`, `bio`) VALUES
+(1, 'bro', 'Password', 'arjhond', 'g', 'galia', NULL, NULL, '2024-05-15 02:53:36', '2024-05-16 03:52:17', '0000-00-00', '0', '', '', '', ''),
+(2, 'user1', 'Password1', 'bro', '', '', NULL, NULL, '2024-05-16 04:04:05', '2024-05-16 04:04:05', '0000-00-00', '0', '', '', '', '');
 
 --
 -- Indexes for dumped tables
@@ -101,7 +109,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `usersid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

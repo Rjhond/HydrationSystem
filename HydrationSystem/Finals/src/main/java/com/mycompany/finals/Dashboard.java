@@ -4,16 +4,20 @@
  */
 package com.mycompany.finals;
 
+import java.sql.Connection;
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Connection;
 
 public class Dashboard extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Dashboard
-     */
+    
+    
+    private final Connection conn;
+    private String username;
+    
     public Dashboard() {
         initComponents();
+        conn = Dbconnect.connectDbase();
     }
 
     /**
@@ -27,11 +31,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        lblwelcome = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuProf = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -45,10 +49,6 @@ public class Dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 204, 255));
-
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Welcome: ");
 
         jTable1.setBackground(new java.awt.Color(255, 255, 255));
         jTable1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -80,6 +80,19 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        lblwelcome.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblwelcome.setForeground(new java.awt.Color(0, 0, 0));
+        lblwelcome.setText("Welcome: ");
+        lblwelcome.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblwelcomeAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -90,20 +103,19 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(0, 69, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton9)))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblwelcome)
+                    .addComponent(jButton9))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addGap(68, 68, 68)
+                .addComponent(lblwelcome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jButton9))
@@ -240,6 +252,13 @@ public class Dashboard extends javax.swing.JFrame {
         pf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void lblwelcomeAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblwelcomeAncestorAdded
+        // TODO add your handling code here:
+        if(username != null && !username.isEmpty()){
+            lblwelcome.setText("Welcome: " + username + " !");
+        }
+    }//GEN-LAST:event_lblwelcomeAncestorAdded
+
     /**
      * @param args the command line arguments
      */
@@ -277,7 +296,6 @@ public class Dashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -287,6 +305,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblwelcome;
     private javax.swing.JMenu menuProf;
     private javax.swing.JMenu menuSet;
     private javax.swing.JMenu menuSummary;

@@ -16,11 +16,12 @@ import javax.swing.JOptionPane;
 public class login extends javax.swing.JFrame {
 
     private final Connection conn;
-    String role, username, password;
+    String username, password;
     
     public login() {
         initComponents();
         conn = Dbconnect.connectDbase();
+        
     }
 
     /**
@@ -190,16 +191,19 @@ public class login extends javax.swing.JFrame {
                 upstmt.setString(2, password);
                 ResultSet urs = upstmt.executeQuery();
                 if(urs.next()){
+                    
                     Dashboard db = new Dashboard();
                     db.setVisible(true);
                     setVisible(false);
                     db.setLocation(null);     
                     db.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Invalid username or password");
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnloginActionPerformed
 
