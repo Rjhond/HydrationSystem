@@ -15,6 +15,8 @@ public class UserAdmin extends javax.swing.JFrame {
      */
     public UserAdmin() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

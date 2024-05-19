@@ -8,12 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -22,12 +20,15 @@ import javax.swing.table.DefaultTableModel;
 public class ForgotPass extends javax.swing.JFrame {
 
     private final Connection conn;
-    String username, newpass, reEnter, answer;
+    String username, newpass, reEnter, answer, 
+            securityQuestion, securityAnswer;
     
     public ForgotPass() {
         initComponents();
         conn = Dbconnect.connectDbase();
         populateComboBox();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
@@ -43,13 +44,17 @@ public class ForgotPass extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cboveri = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        cboquestion = new javax.swing.JComboBox<>();
+        btnveri = new javax.swing.JButton();
         btnback = new javax.swing.JButton();
         btnconfirm = new javax.swing.JButton();
         txtanswer = new javax.swing.JTextField();
         txtnewpass = new javax.swing.JPasswordField();
         txtreenter = new javax.swing.JPasswordField();
+        txtuname = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,16 +72,21 @@ public class ForgotPass extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Re-Enter New Password:");
 
-        cboveri.setBackground(new java.awt.Color(255, 255, 255));
-        cboveri.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        cboveri.setForeground(new java.awt.Color(0, 0, 0));
-        cboveri.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cboquestion.setBackground(new java.awt.Color(255, 255, 255));
+        cboquestion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        cboquestion.setForeground(new java.awt.Color(0, 0, 0));
+        cboquestion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setBackground(new java.awt.Color(102, 204, 0));
-        jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Verification");
-        jButton1.setBorder(null);
+        btnveri.setBackground(new java.awt.Color(102, 204, 0));
+        btnveri.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnveri.setForeground(new java.awt.Color(0, 0, 0));
+        btnveri.setText("Verification");
+        btnveri.setBorder(null);
+        btnveri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnveriActionPerformed(evt);
+            }
+        });
 
         btnback.setBackground(new java.awt.Color(255, 51, 51));
         btnback.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -104,6 +114,11 @@ public class ForgotPass extends javax.swing.JFrame {
         txtanswer.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtanswer.setForeground(new java.awt.Color(0, 0, 0));
         txtanswer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtanswer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtanswerActionPerformed(evt);
+            }
+        });
 
         txtnewpass.setBackground(new java.awt.Color(255, 255, 255));
         txtnewpass.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -115,12 +130,34 @@ public class ForgotPass extends javax.swing.JFrame {
         txtreenter.setForeground(new java.awt.Color(0, 0, 0));
         txtreenter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        txtuname.setBackground(new java.awt.Color(255, 255, 255));
+        txtuname.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtuname.setForeground(new java.awt.Color(0, 0, 0));
+        txtuname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtuname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtunameActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("username:");
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Answer:");
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Question:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(159, Short.MAX_VALUE)
+                .addContainerGap(262, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(146, 146, 146))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -130,17 +167,22 @@ public class ForgotPass extends javax.swing.JFrame {
                 .addComponent(btnconfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtanswer, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboveri, 0, 250, Short.MAX_VALUE)
+                    .addComponent(cboquestion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtnewpass)
-                    .addComponent(txtreenter, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txtreenter, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtuname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnveri, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -148,12 +190,20 @@ public class ForgotPass extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addGap(98, 98, 98)
+                .addGap(84, 84, 84)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboveri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtuname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboquestion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7))
+                    .addComponent(btnveri, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtanswer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtanswer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -162,7 +212,7 @@ public class ForgotPass extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtreenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnback, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnconfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -195,47 +245,91 @@ public class ForgotPass extends javax.swing.JFrame {
 
     private void btnconfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconfirmActionPerformed
         // TODO add your handling code here:
-        String question = (String) cboveri.getSelectedItem();
+        String question = (String) cboquestion.getSelectedItem();
+        username = txtuname.getText();
         answer = txtanswer.getText();
-        newpass = txtnewpass.getText();
-        reEnter = txtreenter.getText();
+        newpass = new String(txtnewpass.getPassword());
+        reEnter = new String(txtreenter.getPassword());
         
-        if(newpass.equals(reEnter)){
+        
+        if(!newpass.equals(reEnter)){
             JOptionPane.showMessageDialog(this, "The Password does not match. Please try again");
             return;
         }
         
-        if(question == null || question.equals("Please select Question") || answer.isEmpty()){
+        if(username.isEmpty() || answer.isEmpty() || cboquestion.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Please fill all the fields");
+        }
+        
+        if(securityQuestion == null || securityQuestion.equals("Please select Question") || answer.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please choose a question and submit an answer.");
         }
         
-        try(PreparedStatement pstmt = conn.prepareStatement("Select username From users WHERE securityQ = ? AND securityA = ?")){
-            pstmt.setString(1, question);
-            pstmt.setString(1, answer);
+        try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE username=? AND securityA=?")){      
+            pstmt.setString(1, username);
+            pstmt.setString(2, answer);
             ResultSet rs = pstmt.executeQuery();
-            if(rs.next()){
-                username = rs.getString("username");
-                try(PreparedStatement pstUpdate = conn.prepareStatement("Upate users SET password = ? WHERE username = ?")){
-                    pstUpdate.setString(1, newpass);
-                    pstUpdate.setString(2, username);
-                    int updated = pstUpdate.executeUpdate();
-                    if(updated > 0){
-                        JOptionPane.showMessageDialog(this, "Password successfully reset");
-                        login lg = new login();
-                        lg.setVisible(true);
-                        setVisible(false);
-                        lg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    }else{
-                        JOptionPane.showMessageDialog(this, "Error: Invalid password, please try again");
-                    }
+
+            if (rs.next()) {
+                // Update the password
+                PreparedStatement uPstmt = conn.prepareStatement("UPDATE users SET password=? WHERE username=?");
+                uPstmt.setString(1, newpass);
+                uPstmt.setString(2, username);
+                int updated = uPstmt.executeUpdate();
+
+                if (updated > 0) {
+                    JOptionPane.showMessageDialog(this, "Password successfully reset");
+                    login lg = new login();
+                    lg.setVisible(true);
+                    setVisible(false);
+                    lg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error: Could not reset the password, please try again");
                 }
-            }else{
-                JOptionPane.showMessageDialog(this, "Incorrect Answer, please try again");
-            }
+                uPstmt.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Incorrect Answer, please try again");
+                }
+                rs.close();
+                pstmt.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnconfirmActionPerformed
+
+    private void txtanswerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtanswerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtanswerActionPerformed
+
+    private void txtunameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtunameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtunameActionPerformed
+
+    private void btnveriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnveriActionPerformed
+        // TODO add your handling code here:
+        username = txtuname.getText();
+
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter your username");
+            return;
+        }
+
+        try(PreparedStatement pstmt = conn.prepareStatement("SELECT securityQ FROM users WHERE username=?")){
+            pstmt.setString(1, username);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                securityQuestion = rs.getString("securityQ");
+                cboquestion.setSelectedItem(securityQuestion);
+            }else{
+                JOptionPane.showMessageDialog(null, "Incorrect username. Please try again");
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnveriActionPerformed
 
     
     /**
@@ -275,22 +369,26 @@ public class ForgotPass extends javax.swing.JFrame {
     
     
         private void populateComboBox() {
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(new String[] {"Select a Question", "What is Your Mothers's Maiden Name?", 
-            "What is your pet's name?", "What is is your birthplace"});
-        cboveri.setModel(model);
-    }
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(new String[] {"Select a Question", "What is Your Mothers's Maiden Name?", 
+                "What is your pet's name?", "What is is your birthplace"});
+            cboquestion.setModel(model);
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnback;
     private javax.swing.JButton btnconfirm;
-    private javax.swing.JComboBox<String> cboveri;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnveri;
+    private javax.swing.JComboBox<String> cboquestion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtanswer;
     private javax.swing.JPasswordField txtnewpass;
     private javax.swing.JPasswordField txtreenter;
+    private javax.swing.JTextField txtuname;
     // End of variables declaration//GEN-END:variables
 }

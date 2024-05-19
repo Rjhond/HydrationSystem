@@ -4,20 +4,37 @@
  */
 package com.mycompany.finals;
 
-import java.sql.Connection;
 import javax.swing.*;
-import java.awt.event.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javax.swing.table.DefaultTableModel;
 
 public class Dashboard extends javax.swing.JFrame {
     
-    
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final Connection conn;
-    private String username;
+    String ml, time;
+    private final DefaultTableModel tableModel;
+    int userId;
+    
     
     public Dashboard() {
+        
         initComponents();
         conn = Dbconnect.connectDbase();
+        tableModel = (DefaultTableModel) tblprog.getModel();
+        setLocationRelativeTo(null);
+        scheduleResetAtMidnight();
+        setResizable(false);
+    }
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     /**
@@ -32,10 +49,12 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        tblprog = new javax.swing.JTable();
+        lbltoday = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
-        lblwelcome = new javax.swing.JLabel();
+        progbar = new javax.swing.JProgressBar();
+        lblpercent = new javax.swing.JLabel();
+        lblleft = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuProf = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -50,10 +69,10 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 204, 255));
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblprog.setBackground(new java.awt.Color(255, 255, 255));
+        tblprog.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        tblprog.setForeground(new java.awt.Color(0, 0, 0));
+        tblprog.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -64,11 +83,20 @@ public class Dashboard extends javax.swing.JFrame {
                 "Drank", "Time"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblprog.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblprogAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tblprog);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Today's Progress:");
+        lbltoday.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lbltoday.setForeground(new java.awt.Color(0, 0, 0));
+        lbltoday.setText("Today's Progress:");
 
         jButton9.setBackground(new java.awt.Color(51, 102, 255));
         jButton9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -80,12 +108,39 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        lblwelcome.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblwelcome.setForeground(new java.awt.Color(0, 0, 0));
-        lblwelcome.setText("Welcome: ");
-        lblwelcome.addAncestorListener(new javax.swing.event.AncestorListener() {
+        progbar.setBackground(new java.awt.Color(255, 255, 255));
+        progbar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        progbar.setForeground(new java.awt.Color(0, 51, 204));
+        progbar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        progbar.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                lblwelcomeAncestorAdded(evt);
+                progbarAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        lblpercent.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblpercent.setForeground(new java.awt.Color(0, 0, 0));
+        lblpercent.setText("/");
+        lblpercent.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblpercentAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        lblleft.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblleft.setForeground(new java.awt.Color(0, 0, 0));
+        lblleft.setText("/");
+        lblleft.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblleftAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -98,30 +153,35 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 69, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblwelcome)
-                    .addComponent(jButton9))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(119, 119, 119)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblpercent, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbltoday)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton9))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                        .addComponent(progbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblleft, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(lblwelcome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addContainerGap(79, Short.MAX_VALUE)
+                .addComponent(lblpercent)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progbar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(lblleft)
+                .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lbltoday)
                     .addComponent(jButton9))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -210,6 +270,12 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
+        addRecord ad = new addRecord();
+        ad.setUserId(userId);
+        ad.setVisible(true);
+        setVisible(false);
+        ad.setLocationRelativeTo(null);
+        setResizable(false);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void menuProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfActionPerformed
@@ -228,6 +294,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         SummaryForm sf = new SummaryForm();
+        sf.setUserId(userId);
         sf.setVisible(true);
         setVisible(false);
         sf.setLocation(null);     
@@ -237,6 +304,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         SettingForm stf = new SettingForm();
+        stf.setUserId(userId);
         stf.setVisible(true);
         setVisible(false);
         stf.setLocation(null);
@@ -252,13 +320,96 @@ public class Dashboard extends javax.swing.JFrame {
         pf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void lblwelcomeAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblwelcomeAncestorAdded
+    private void progbarAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_progbarAncestorAdded
         // TODO add your handling code here:
-        if(username != null && !username.isEmpty()){
-            lblwelcome.setText("Welcome: " + username + " !");
-        }
-    }//GEN-LAST:event_lblwelcomeAncestorAdded
+        try {
+            double intakeGoal;
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT intake_goal FROM water_intake_log WHERE usersid = ?")) {
+                pstmt.setInt(1, userId);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    intakeGoal = rs.getDouble("intake_goal");
+                } else {
+                    intakeGoal = 2180.0;
+                }
+            }
+            double totalIntake;
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT SUM(intake_ml) AS total_intake FROM water_intake_log WHERE usersid = ?")) {
+                pstmt.setInt(1, userId);
+                ResultSet rs = pstmt.executeQuery();
+                totalIntake = rs.next() ? rs.getDouble("total_intake") : 0.0;
+            }           
+            int progressPercentage = (int) ((totalIntake / intakeGoal) * 100);
+            progbar.setValue(progressPercentage);
 
+            double remainingIntake = intakeGoal - totalIntake;
+            lblpercent.setText(String.format("%.2f/%.0f (%d%%)", totalIntake, intakeGoal, progressPercentage));
+            lblleft.setText(String.format("Remaining: %.2f ml", remainingIntake));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_progbarAncestorAdded
+
+    private void tblprogAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblprogAncestorAdded
+        // TODO add your handling code here:
+        tableModel.setRowCount(0);
+        
+        try {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT intake_ml, intake_time FROM water_intake_log WHERE usersid = ?")) {
+                pstmt.setInt(1, userId);
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    ml = rs.getString("intake_ml");
+                    time = rs.getString("intake_time");
+                    tableModel.addRow(new Object[]{ml, time});
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,  ex.getMessage());
+        }
+    }//GEN-LAST:event_tblprogAncestorAdded
+
+    private void lblpercentAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblpercentAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblpercentAncestorAdded
+
+    private void lblleftAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblleftAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblleftAncestorAdded
+
+    public void resetDailyData() {
+        progbar.setValue(0); 
+        lblpercent.setText(""); 
+        lblleft.setText("");
+
+        try (PreparedStatement pstmt = conn.prepareStatement("DELETE FROM water_intake_log WHERE DATE(intake_time) = CURDATE()")) {
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println(rowsAffected + " records deleted.");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+    
+    private void scheduleResetAtMidnight() {
+        Calendar now = Calendar.getInstance();
+        long initialDelay = calculateMillisecondsUntilMidnight(now);
+        scheduler.scheduleAtFixedRate(this::resetDailyData, initialDelay, 24 * 60 * 60 * 1000, TimeUnit.MILLISECONDS);
+    }
+    
+    private long calculateMillisecondsUntilMidnight(Calendar now) {
+        Calendar midnight = Calendar.getInstance();
+        midnight.set(Calendar.HOUR_OF_DAY, 24);
+        midnight.set(Calendar.MINUTE, 0);
+        midnight.set(Calendar.SECOND, 0);
+        midnight.set(Calendar.MILLISECOND, 0);
+        
+        long millisUntilMidnight = midnight.getTimeInMillis() - now.getTimeInMillis();
+        if (millisUntilMidnight < 0) {
+            millisUntilMidnight += 24 * 60 * 60 * 1000;
+        }
+        return millisUntilMidnight;
+    }
     /**
      * @param args the command line arguments
      */
@@ -296,7 +447,6 @@ public class Dashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -304,10 +454,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblwelcome;
+    private javax.swing.JLabel lblleft;
+    private javax.swing.JLabel lblpercent;
+    private javax.swing.JLabel lbltoday;
     private javax.swing.JMenu menuProf;
     private javax.swing.JMenu menuSet;
     private javax.swing.JMenu menuSummary;
+    private javax.swing.JProgressBar progbar;
+    private javax.swing.JTable tblprog;
     // End of variables declaration//GEN-END:variables
 }

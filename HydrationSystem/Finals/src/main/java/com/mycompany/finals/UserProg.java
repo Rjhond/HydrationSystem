@@ -15,6 +15,8 @@ public class UserProg extends javax.swing.JFrame {
      */
     public UserProg() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

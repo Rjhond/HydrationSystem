@@ -4,8 +4,7 @@
  */
 package com.mycompany.finals;
 
-import javax.swing.JFrame;
-import com.toedter.calendar.JDateChooser;
+
 import java.util.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import com.toedter.calendar.JDateChooser;
 import java.sql.Statement;
 
 
@@ -21,14 +19,19 @@ public class ProfileForm extends javax.swing.JFrame {
 
     private final Connection conn;
     String username, act, interest, bio, contact, email, address;
-    String emailPattern = "^[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,7}$";
-    String mobilePattern = "^09\\d{9}$";
+    int userId;
     Date birthday;
     
     public ProfileForm() {
         initComponents();
         conn = Dbconnect.connectDbase();
+        setLocationRelativeTo(null);
+        setResizable(false);
         
+    }
+    
+     public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     /**
@@ -42,21 +45,21 @@ public class ProfileForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lbluname = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lbladdress = new javax.swing.JLabel();
         txtaddress = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
+        lblact = new javax.swing.JLabel();
         txtinter = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
+        lblinter = new javax.swing.JLabel();
         txtact = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtbio = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        lblcontact = new javax.swing.JLabel();
         txtcontact = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
+        lblemail = new javax.swing.JLabel();
         txtemail = new javax.swing.JTextField();
         btnsave = new javax.swing.JButton();
         btnback = new javax.swing.JButton();
@@ -76,17 +79,35 @@ public class ProfileForm extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Profile");
 
-        jLabel12.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel12.setText("Username:");
+        lbluname.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lbluname.setForeground(new java.awt.Color(0, 0, 0));
+        lbluname.setText("Username:");
+        lbluname.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblunameAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Birthday:");
 
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel14.setText("Address:");
+        lbladdress.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lbladdress.setForeground(new java.awt.Color(0, 0, 0));
+        lbladdress.setText("Address:");
+        lbladdress.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lbladdressAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         txtaddress.setBackground(new java.awt.Color(255, 255, 255));
         txtaddress.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
@@ -97,17 +118,35 @@ public class ProfileForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel15.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel15.setText("Activities:");
+        lblact.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lblact.setForeground(new java.awt.Color(0, 0, 0));
+        lblact.setText("Activities:");
+        lblact.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblactAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         txtinter.setBackground(new java.awt.Color(255, 255, 255));
         txtinter.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         txtinter.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabel16.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel16.setText("Interests:");
+        lblinter.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lblinter.setForeground(new java.awt.Color(0, 0, 0));
+        lblinter.setText("Interests:");
+        lblinter.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblinterAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         txtact.setBackground(new java.awt.Color(255, 255, 255));
         txtact.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
@@ -132,17 +171,35 @@ public class ProfileForm extends javax.swing.JFrame {
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setText("Contact Information");
 
-        jLabel19.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel19.setText("Contact Information:");
+        lblcontact.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        lblcontact.setForeground(new java.awt.Color(0, 0, 0));
+        lblcontact.setText("Contact Information:");
+        lblcontact.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblcontactAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         txtcontact.setBackground(new java.awt.Color(255, 255, 255));
         txtcontact.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         txtcontact.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabel20.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel20.setText("Email:");
+        lblemail.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lblemail.setForeground(new java.awt.Color(0, 0, 0));
+        lblemail.setText("Email:");
+        lblemail.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblemailAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         txtemail.setBackground(new java.awt.Color(255, 255, 255));
         txtemail.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
@@ -189,21 +246,21 @@ public class ProfileForm extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel16)
+                            .addComponent(lbluname)
+                            .addComponent(lbladdress)
+                            .addComponent(lblinter)
                             .addComponent(txtinter, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                            .addComponent(jLabel15)
+                            .addComponent(lblact)
                             .addComponent(txtaddress)
                             .addComponent(txtact)
                             .addComponent(dateBirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtuname))
                         .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20)
+                            .addComponent(lblemail)
                             .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtcontact, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19)
+                            .addComponent(lblcontact)
                             .addComponent(jLabel18)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17))))
@@ -221,7 +278,7 @@ public class ProfileForm extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel12))
+                    .addComponent(lbluname))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,23 +291,23 @@ public class ProfileForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(dateBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel14)
+                        .addComponent(lbladdress)
                         .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtaddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18))))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel19))
+                    .addComponent(lblact)
+                    .addComponent(lblcontact))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcontact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel20))
+                    .addComponent(lblinter)
+                    .addComponent(lblemail))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtinter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,45 +340,62 @@ public class ProfileForm extends javax.swing.JFrame {
     private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
         // TODO add your handling code here: 
         username = txtuname.getText();
-        address = txtaddress.getText();
         act = txtact.getText();
         interest = txtinter.getText();
         bio = txtbio.getText();
         contact = txtcontact.getText();
         email = txtemail.getText();
-        birthday = (Date) dateBirth.getDate();
-        
-        if(username.equals("")){
-            JOptionPane.showMessageDialog(null, "Username is required");
-        }else if(act.equals("")){
-            JOptionPane.showMessageDialog(null, "Activity is required");
-        /*}else if(contact.matches(mobilePattern) || contact.length() !=11){
-            JOptionPane.showMessageDialog(null, "Contact number is invalid");
-        }else if(!email.matches(emailPattern)){
-            JOptionPane.showMessageDialog(null, "Email is required");*/
-        }else if(address.equals("")){
-            JOptionPane.showMessageDialog(null, "Address is required");
-        }else{
-            try(PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET username=?, act=?, interest=?, bio=?, contact=?, email=?, birthdate=?")) {
-                pstmt.setString(1, username);
-                pstmt.setString(2, address);
-                pstmt.setString(3, act);
-                pstmt.setString(4, interest);
-                pstmt.setString(5, bio);
-                pstmt.setString(6, contact);
-                pstmt.setString(7, email);
-                pstmt.setDate(6, new java.sql.Date(birthday.getTime()));
-                
-                int row = pstmt.executeUpdate();
-                if(row > 0){
-                    JOptionPane.showMessageDialog(this, "Profile updated successfully!");
-                }else{
-                    JOptionPane.showMessageDialog(this, "Error updating profile, please try again.");
+        birthday = dateBirth.getDate();
+        address = txtaddress.getText();
+
+        try {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT u.bio, c.email, a.act, u.username, u.address " +
+                "FROM users u " +
+                "JOIN contacts c ON u.contact_id = c.id " +
+                "JOIN activities a ON u.activity_id = a.id " +
+                "WHERE u.usersid = ?")) {
+                pstmt.setInt(1, userId);
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        String existingEmail = rs.getString("email");
+                        String existingAct = rs.getString("act");
+                        String existingBio = rs.getString("bio");
+                        String existingUsername = rs.getString("username");
+                        String existingAddress = rs.getString("address");
+
+                        if (!email.equals(existingEmail) || !act.equals(existingAct) || !username.equals(existingUsername) || !bio.equals(existingBio) || !address.equals(existingAddress)) {
+                            try (PreparedStatement upstmt = conn.prepareStatement("UPDATE users SET bio=?, username=?, address=?, birthday=? WHERE usersid=?")) {
+                                upstmt.setString(1, bio);
+                                upstmt.setString(2, username);
+                                upstmt.setString(3, address);
+                                upstmt.setDate(4, new java.sql.Date(birthday.getTime()));
+                                upstmt.setInt(5, userId);
+                                upstmt.executeUpdate();
+                            }
+
+                            try (PreparedStatement upstmt = conn.prepareStatement("UPDATE contacts SET email=? WHERE id=(SELECT contact_id FROM users WHERE usersid=?)")) {
+                                upstmt.setString(1, email);
+                                upstmt.setInt(2, userId);
+                                upstmt.executeUpdate();
+                            }
+
+                            try (PreparedStatement upstmt = conn.prepareStatement("UPDATE activities SET act=? WHERE id=(SELECT activity_id FROM users WHERE usersid=?)")) {
+                                upstmt.setString(1, act);
+                                upstmt.setInt(2, userId);
+                                upstmt.executeUpdate();
+                            }
+                            JOptionPane.showMessageDialog(null, "Account Settings updated successfully!");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No changes detected.");
+                        }
+                    }
                 }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
-        }                                     
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
     }//GEN-LAST:event_btnsaveActionPerformed
 
     private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
@@ -335,34 +409,96 @@ public class ProfileForm extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        username = txtuname.getText();
-        act = txtact.getText();
-        interest = txtinter.getText();
-        bio = txtbio.getText();
-        contact = txtcontact.getText();
-        email = txtemail.getText();
-        birthday = dateBirth.getDate();
         
-        try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
-            while(rs.next()){
-                txtuname.setText("username");
-                txtact.setText("Activity");
-                txtinter.setText("Interest");
-                txtbio.setText("Bio");
-                txtcontact.setText("Contact Numaber");
-                txtemail.setText("Email");
-                dateBirth.setDate(rs.getDate("birthdate"));
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
     }//GEN-LAST:event_formComponentShown
 
     private void txtaddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtaddressActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtaddressActionPerformed
+
+    private void lblunameAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblunameAncestorAdded
+        // TODO add your handling code here:
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT username FROM users WHERE usersid = ?")) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String UserName = rs.getString("username"); 
+                lbluname.setText("Username: " + UserName);                   
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_lblunameAncestorAdded
+
+    private void lbladdressAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lbladdressAncestorAdded
+        // TODO add your handling code here:
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT address FROM users WHERE usersid = ?")) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String addresss = rs.getString("address"); 
+                lbluname.setText("Username: " + addresss);                   
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_lbladdressAncestorAdded
+
+    private void lblactAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblactAncestorAdded
+        // TODO add your handling code here:
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT a.act FROM users u JOIN activities a ON u.activity_id = a.id WHERE u.usersid = ?")) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String act = rs.getString("act"); 
+                lblact.setText("Activity: " + act);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_lblactAncestorAdded
+
+    private void lblinterAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblinterAncestorAdded
+        // TODO add your handling code here:
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT interest FROM activities JOIN users ON activities.id = users.activity_id WHERE users.usersid = ?")) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String interest = rs.getString("interest");
+                lblinter.setText("Interest: " + interest);
+            }
+        }catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_lblinterAncestorAdded
+
+    private void lblcontactAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblcontactAncestorAdded
+        // TODO add your handling code here:
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT contact FROM contacts JOIN users ON contacts.id = users.contact_id WHERE users.usersid = ?")) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String contact = rs.getString("contact");
+                lblcontact.setText("Contact: " + contact);
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_lblcontactAncestorAdded
+
+    private void lblemailAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblemailAncestorAdded
+        // TODO add your handling code here:
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT email FROM contacts JOIN users ON contacts.id = users.contact_id WHERE users.usersid = ?")) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String email = rs.getString("email");
+                lblemail.setText("Email: " + email);
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_lblemailAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -404,17 +540,17 @@ public class ProfileForm extends javax.swing.JFrame {
     private javax.swing.JButton btnsave;
     private com.toedter.calendar.JDateChooser dateBirth;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblact;
+    private javax.swing.JLabel lbladdress;
+    private javax.swing.JLabel lblcontact;
+    private javax.swing.JLabel lblemail;
+    private javax.swing.JLabel lblinter;
+    private javax.swing.JLabel lbluname;
     private javax.swing.JTextField txtact;
     private javax.swing.JTextField txtaddress;
     private javax.swing.JTextArea txtbio;

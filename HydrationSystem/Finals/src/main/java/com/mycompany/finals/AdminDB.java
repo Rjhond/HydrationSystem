@@ -18,13 +18,19 @@ import javax.swing.JOptionPane;
 public class AdminDB extends javax.swing.JFrame {
 
     private final Connection conn;
-    
+    int adminId;
     
     public AdminDB() {
         initComponents();
         conn = Dbconnect.connectDbase();
+        setLocationRelativeTo(null);
+        setResizable(false);
         
     }
+        public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,9 +159,9 @@ public class AdminDB extends javax.swing.JFrame {
                 .addComponent(btnuser, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnuprog, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnasettings, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnlogout)
                 .addContainerGap())
         );
@@ -412,6 +418,7 @@ public class AdminDB extends javax.swing.JFrame {
 
         if(option == JOptionPane.YES_OPTION){
             login lg = new login();
+            lg.setVisible(true);
             lg.setVisible(true);
             setVisible(false);
             lg.setLocation(null);

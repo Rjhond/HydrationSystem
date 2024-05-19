@@ -18,6 +18,8 @@ public class ASadmin extends javax.swing.JFrame {
      */
     public ASadmin() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

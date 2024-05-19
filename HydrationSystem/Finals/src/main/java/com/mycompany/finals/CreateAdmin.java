@@ -25,6 +25,8 @@ public class CreateAdmin extends javax.swing.JFrame {
     public CreateAdmin() {
         initComponents();
         conn = Dbconnect.connectDbase();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

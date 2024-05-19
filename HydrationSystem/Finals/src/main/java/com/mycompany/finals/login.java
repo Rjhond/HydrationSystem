@@ -17,11 +17,21 @@ public class login extends javax.swing.JFrame {
 
     private final Connection conn;
     String username, password;
+    int userId, adminId;
     
     public login() {
+        
         initComponents();
         conn = Dbconnect.connectDbase();
+        setLocationRelativeTo(null);
+        setResizable(false);
         
+    }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
     /**
@@ -173,26 +183,31 @@ public class login extends javax.swing.JFrame {
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
         // TODO add your handling code here:
         username = txtusername.getText();
-        password = txtpassword.getText();
+         password = new String(txtpassword.getPassword());
 
-        try(PreparedStatement apstmt = conn.prepareStatement("SELECT * FROM admin WHERE username=? AND password=?") ){
+        try(PreparedStatement apstmt = conn.prepareStatement("SELECT adminid FROM admin WHERE username=? AND password=?") ){
             apstmt.setString(1, username);
             apstmt.setString(2, password);
             ResultSet ars = apstmt.executeQuery();
             if(ars.next()){
+                adminId = ars.getInt("usersid");
+                               
                 AdminDB adb = new AdminDB();
+                adb.setAdminId(adminId);
                 adb.setVisible(true);
                 setVisible(false);
                 adb.setLocation(null);     
                 adb.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }else{
-                PreparedStatement upstmt = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+                PreparedStatement upstmt = conn.prepareStatement("SELECT usersid FROM users WHERE username=? AND password=?");               
                 upstmt.setString(1, username);
                 upstmt.setString(2, password);
                 ResultSet urs = upstmt.executeQuery();
                 if(urs.next()){
+                    userId = urs.getInt("usersid");
                     
                     Dashboard db = new Dashboard();
+                    db.setUserId(userId);
                     db.setVisible(true);
                     setVisible(false);
                     db.setLocation(null);     
@@ -206,7 +221,7 @@ public class login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnloginActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -241,7 +256,7 @@ public class login extends javax.swing.JFrame {
             }
         });
     }
-    
+ 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -25,6 +25,8 @@ public class CreateUser extends javax.swing.JFrame {
     public CreateUser() {
         initComponents();
         conn = Dbconnect.connectDbase();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
