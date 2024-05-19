@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:4306
--- Generation Time: May 19, 2024 at 04:21 PM
+-- Generation Time: May 19, 2024 at 06:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -39,7 +39,7 @@ CREATE TABLE `activities` (
 --
 
 INSERT INTO `activities` (`id`, `act`, `interest`, `actLvl`) VALUES
-(1, '', '', '');
+(1, '', '', 'Very Active: Intense exercise regularly.');
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,7 @@ CREATE TABLE `contacts` (
 --
 
 INSERT INTO `contacts` (`id`, `contact`, `email`) VALUES
-(1, '0', '');
+(1, '0', 'user1@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`usersid`, `username`, `password`, `fname`, `mname`, `lname`, `securityQ`, `securityA`, `RegDate`, `visitTime`, `birthdate`, `contact_id`, `activity_id`, `bio`, `weight`) VALUES
-(2, 'user1', '123', 'bro', '', '', 'What is your pet\'s name?', 'enzo', '2024-05-16 04:04:05', '2024-05-16 04:04:05', '0000-00-00', 1, 1, '', 0.00);
+(2, 'user1', '123', 'john', 'm', 'smith', 'What is your pet\'s name?', 'enzo', '2024-05-16 04:04:05', '2024-05-16 04:04:05', '0000-00-00', 1, 1, '', 70.00);
 
 -- --------------------------------------------------------
 
@@ -127,17 +127,18 @@ CREATE TABLE `water_intake_log` (
   `usersid` int(11) NOT NULL,
   `intake_date` date NOT NULL,
   `intake_time` time NOT NULL,
-  `intake_ml` decimal(10,2) NOT NULL
+  `intake_ml` decimal(10,2) NOT NULL,
+  `intake_goal` decimal(10,2) DEFAULT 2180.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `water_intake_log`
 --
 
-INSERT INTO `water_intake_log` (`log_id`, `usersid`, `intake_date`, `intake_time`, `intake_ml`) VALUES
-(1, 2, '2024-05-19', '18:37:32', 200.00),
-(2, 2, '2024-05-19', '05:04:00', 114.00),
-(13, 2, '2024-05-19', '00:05:00', 200.00);
+INSERT INTO `water_intake_log` (`log_id`, `usersid`, `intake_date`, `intake_time`, `intake_ml`, `intake_goal`) VALUES
+(1, 2, '2024-05-19', '18:37:32', 200.00, 2180.00),
+(2, 2, '2024-05-19', '05:04:00', 114.00, 2180.00),
+(13, 2, '2024-05-19', '00:05:00', 200.00, 2180.00);
 
 --
 -- Indexes for dumped tables
