@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:4306
--- Generation Time: May 19, 2024 at 07:42 PM
+-- Generation Time: May 20, 2024 at 03:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -139,7 +139,10 @@ CREATE TABLE `water_intake_log` (
 INSERT INTO `water_intake_log` (`log_id`, `usersid`, `intake_date`, `intake_time`, `intake_ml`, `intake_goal`) VALUES
 (1, 2, '2024-05-19', '18:37:32', 200.00, 2180.00),
 (2, 2, '2024-05-19', '05:04:00', 114.00, 2180.00),
-(13, 2, '2024-05-19', '00:05:00', 200.00, 2180.00);
+(13, 2, '2024-05-19', '00:05:00', 200.00, 2180.00),
+(14, 0, '2024-05-20', '02:00:00', 150.00, 2180.00),
+(15, 2, '2024-05-20', '01:03:00', 100.00, 2180.00),
+(16, 2, '2024-05-20', '08:30:00', 250.00, 2180.00);
 
 --
 -- Indexes for dumped tables
@@ -212,7 +215,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `water_intake_log`
 --
 ALTER TABLE `water_intake_log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
