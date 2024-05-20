@@ -190,7 +190,7 @@ public class login extends javax.swing.JFrame {
             apstmt.setString(2, password);
             ResultSet ars = apstmt.executeQuery();
             if(ars.next()){
-                adminId = ars.getInt("usersid");
+                adminId = ars.getInt("adminid");
                                
                 AdminDB adb = new AdminDB();
                 adb.setAdminId(adminId);

@@ -47,9 +47,9 @@ public class ASadmin extends javax.swing.JFrame {
         jTextField13 = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jTextField14 = new javax.swing.JTextField();
-        btnlogout1 = new javax.swing.JButton();
-        btnlogout2 = new javax.swing.JButton();
-        btnlogout3 = new javax.swing.JButton();
+        btncreate = new javax.swing.JButton();
+        btncreateA = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
         btnlogout4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -175,19 +175,34 @@ public class ASadmin extends javax.swing.JFrame {
         jTextField14.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jTextField14.setForeground(new java.awt.Color(0, 0, 0));
 
-        btnlogout1.setBackground(new java.awt.Color(51, 204, 0));
-        btnlogout1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnlogout1.setForeground(new java.awt.Color(0, 0, 0));
-        btnlogout1.setText("Create User Account");
+        btncreate.setBackground(new java.awt.Color(51, 204, 0));
+        btncreate.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btncreate.setForeground(new java.awt.Color(0, 0, 0));
+        btncreate.setText("Create User Account");
+        btncreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncreateActionPerformed(evt);
+            }
+        });
 
-        btnlogout2.setBackground(new java.awt.Color(51, 204, 0));
-        btnlogout2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnlogout2.setForeground(new java.awt.Color(0, 0, 0));
-        btnlogout2.setText("Create Admin Account");
+        btncreateA.setBackground(new java.awt.Color(51, 204, 0));
+        btncreateA.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btncreateA.setForeground(new java.awt.Color(0, 0, 0));
+        btncreateA.setText("Create Admin Account");
+        btncreateA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncreateAActionPerformed(evt);
+            }
+        });
 
-        btnlogout3.setBackground(new java.awt.Color(255, 51, 51));
-        btnlogout3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnlogout3.setText("Delete Account");
+        btndelete.setBackground(new java.awt.Color(255, 51, 51));
+        btndelete.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btndelete.setText("Delete Account");
+        btndelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeleteActionPerformed(evt);
+            }
+        });
 
         btnlogout4.setBackground(new java.awt.Color(0, 204, 0));
         btnlogout4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -224,9 +239,9 @@ public class ASadmin extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnlogout2, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                            .addComponent(btnlogout1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnlogout3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btncreateA, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                            .addComponent(btncreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btndelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnlogout4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))))
@@ -250,12 +265,12 @@ public class ASadmin extends javax.swing.JFrame {
                     .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnlogout1)
+                .addComponent(btncreate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnlogout2)
+                .addComponent(btncreateA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnlogout3)
+                    .addComponent(btndelete)
                     .addComponent(btnlogout4))
                 .addContainerGap())
         );
@@ -288,6 +303,33 @@ public class ASadmin extends javax.swing.JFrame {
  
         }
     }//GEN-LAST:event_btnlogoutActionPerformed
+
+    private void btncreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncreateActionPerformed
+        // TODO add your handling code here:
+        CreateUser cu = new CreateUser();
+        cu.setVisible(true);
+        setVisible(false);
+        cu.setLocation(null);     
+        cu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_btncreateActionPerformed
+
+    private void btncreateAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncreateAActionPerformed
+        // TODO add your handling code here:
+        CreateAdmin ca = new CreateAdmin();
+        ca.setVisible(true);
+        setVisible(false);
+        ca.setLocation(null);     
+        ca.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_btncreateAActionPerformed
+
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
+        // TODO add your handling code here:
+        deleteForm df = new deleteForm();
+        df.setVisible(true);
+        setVisible(false);
+        df.setLocation(null);
+        df.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_btndeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,11 +371,11 @@ public class ASadmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnasettings;
+    private javax.swing.JButton btncreate;
+    private javax.swing.JButton btncreateA;
     private javax.swing.JButton btndashboard;
+    private javax.swing.JButton btndelete;
     private javax.swing.JButton btnlogout;
-    private javax.swing.JButton btnlogout1;
-    private javax.swing.JButton btnlogout2;
-    private javax.swing.JButton btnlogout3;
     private javax.swing.JButton btnlogout4;
     private javax.swing.JButton btnuprog;
     private javax.swing.JButton btnuser;

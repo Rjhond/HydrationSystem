@@ -5,11 +5,13 @@
 package com.mycompany.finals;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,10 +20,12 @@ import javax.swing.JOptionPane;
 public class AdminDB extends javax.swing.JFrame {
 
     private final Connection conn;
+    private final DefaultTableModel tableModel;
     int adminId;
     
     public AdminDB() {
         initComponents();
+        tableModel = (DefaultTableModel) tbldbadmin.getModel();
         conn = Dbconnect.connectDbase();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -59,7 +63,7 @@ public class AdminDB extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         lblyear = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbldbadmin = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -297,7 +301,17 @@ public class AdminDB extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jScrollPane2.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jScrollPane2AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        tbldbadmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -305,10 +319,19 @@ public class AdminDB extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "users", "drank", "date", "time"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        tbldbadmin.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tbldbadminAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane2.setViewportView(tbldbadmin);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -430,11 +453,11 @@ public class AdminDB extends javax.swing.JFrame {
 
     private void btnasettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnasettingsActionPerformed
         // TODO add your handling code here:
-        CreateUser cu = new CreateUser();
-        cu.setVisible(true);
+        ASadmin as = new ASadmin();
+        as.setVisible(true);
         setVisible(false);
-        cu.setLocation(null);     
-        cu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        as.setLocation(null);     
+        as.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_btnasettingsActionPerformed
 
     private void btnuprogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnuprogActionPerformed
@@ -445,6 +468,32 @@ public class AdminDB extends javax.swing.JFrame {
         up.setLocation(null);     
         up.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_btnuprogActionPerformed
+
+    private void jScrollPane2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jScrollPane2AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2AncestorAdded
+
+    private void tbldbadminAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbldbadminAncestorAdded
+        // TODO add your handling code here:
+        tableModel.setRowCount(0); 
+ 
+        
+        try {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT u.username, w.intake_ml, w.intake_date, w.intake_time " +
+                    "FROM users u JOIN water_intake_log w ON u.usersid = w.usersid")) {
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    String username = rs.getString("username");
+                    Date intake = rs.getDate("intake_date");
+                    String ml = rs.getString("intake_ml");
+                    String time = rs.getString("intake_time");
+                    tableModel.addRow(new Object[]{username, intake, ml, time});
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error occurred while retrieving data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tbldbadminAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -496,10 +545,10 @@ public class AdminDB extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblmonth;
     private javax.swing.JLabel lbltoday;
     private javax.swing.JLabel lbltotal;
     private javax.swing.JLabel lblyear;
+    private javax.swing.JTable tbldbadmin;
     // End of variables declaration//GEN-END:variables
 }
